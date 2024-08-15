@@ -1,0 +1,34 @@
+<nav th:fragment="navbarFragment">
+    <div class="nav_container">
+        <a class="navbar-logo" href="/">cheezeHam</a>
+        <div class="login_join_box" id="navbarSupportedContent">
+            <ul class="login_join_box_inner">
+<!--                <li class="nav-item">-->
+<!--                    <a class="login_btn" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>-->
+<!--                    <a class="login_btn" sec:authorize="isAuthenticated()" th:text="${username}"></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item_bar">-->
+<!--                    <div class="nav_bar"></div>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="join_btn" sec:authorize="isAnonymous()" th:href="@{/user/signup}" >회원가입</a>-->
+<!--                    <a class="login_btn" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </div>
+    <div class="nav_banner">
+        <img class="nav_banner_img" th:src="@{/img/hamster_banner.gif}" alt="햄스터배너">
+    </div>
+    <div class="nav_gnb">
+        <ul class="nav_gnb_box">
+            <li class="nav_gnb_item"><a th:href="@{/total/list}">전체글보기</a></li>
+            <li class="nav_gnb_bar"></li>
+            <li class="nav_gnb_item"><a th:href="@{/event/list}">이벤트</a></li>
+            <li class="nav_gnb_bar"></li>
+            <li class="nav_gnb_item"><a th:href="@{/notice/list}">공지사항</a></li>
+            <li class="nav_gnb_bar"></li>
+            <li class="nav_gnb_item"><a th:href="@{/notice/rule}">카페규칙</a></li>
+        </ul>
+    </div>
+</nav>

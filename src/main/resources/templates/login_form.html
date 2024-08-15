@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+</head>
+<body>
+<div id="login_wrap">
+    <header class="login_header">
+        <div class="login_header_inner">
+            <a th:href="@{/}" class="login_logo">
+                CHEEZEHAM
+            </a>
+        </div>
+    </header>
+    <div id="login_container" class="login_container">
+        <div class="login_content">
+            <div class="login_wrap">
+                <form th:action="@{/user/login}" method="post">
+                    <ul class="login_panel_wrap">
+                        <div class="menu_id">
+                            <span class="login_menu_text">
+                                <span class="login_text">ID 로그인</span>
+                            </span>
+                        </div>
+                        <li class="login_panel_item" style="display: block;">
+                            <div class="login_panel_inner">
+                                <div class="login_form">
+                                    <div class="login_box">
+                                        <div class="input_item id" id="input_item_id">
+                                            <input type="text" class="input_id" id="userid" name="id" placeholder="아이디">
+                                        </div>
+                                        <div class="input_item pw" id="input_item_pw">
+                                            <input type="password" class="input_pw" id="pwd" name="password" placeholder="비밀번호">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:if="${param.error}">
+                                    <div class="login_error">
+                                        입력한 ID 또는 비밀번호를 확인하세요.
+                                    </div>
+                                </div>
+                                <div class="btn_login_wrap">
+                                    <button type="submit" class="btn_login" id="log.login">
+                                        <span class="btn_text">로그인</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="find_wrap">
+                                <a th:href="@{/user/signup}" class="find_text">회원가입</a>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

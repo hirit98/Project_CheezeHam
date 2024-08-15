@@ -1,0 +1,166 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container">
+    <div class="notice_detail_page_container_total_box">
+        <div class="notice_detail_page_container">
+            <div class="notice_detail_page_pre_next_btn">
+                <div class="modify_delete_btn" th:if="${#authentication.principal.username == notice.getAuthor()?.getId()}">
+                    <div class="notice_page_pre_btn">
+                        <a href="javascript:void(0);" th:data-uri="@{|/notice/delete/${notice.getNo()}|}" class="delete" sec:authorize="isAuthenticated()" th:text="삭제"></a>
+                    </div>
+                    <div class="notice_page_pre_btn">
+                        <a th:href="@{|/notice/modify/${notice.getNo()}|}" class="modify_btn" sec:authorize="isAuthenticated()" th:text="수정"></a>
+                    </div>
+                </div>
+                <div class="modify_delete_btn">
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="notice_pre_next_list_btn_box">
+                    <div th:if="${hasPrevious}" class="notice_page_pre_btn">
+                        <a th:href="@{|/notice/detail/${notice.getNo() - 1}|}">이전글</a><span class="notice_detail_pre_btn">❯</span>
+                    </div>
+                    <div th:if="${hasNext}" class="notice_page_next_btn">
+                        <a th:href="@{|/notice/detail/${notice.getNo() + 1}|}">다음글</a><span class="notice_detail_next_btn">❯</span>
+                    </div>
+                    <div class="notice_page_list_btn">
+                        <a th:href="@{/notice/list}">목록</a>
+                    </div>
+                </div>
+            </div>
+            <div class="notice_detail_page_content">
+                <div class="notice_detail_page_title_box">
+                    <div>
+                        <div class="notice_detail_page_notice_list">공지사항 ></div>
+                        <div class="notice_detail_page_title" th:text="${notice.getTitle()}"></div>
+                        <div class="notice_detail_write_info">
+                            <img class="notice_detail_admin_img" th:if="${notice.getAuthor() != null}" th:src="${notice.getAuthor().getProfile()}" alt="유저이미지">
+                            <img class="notice_detail_admin_img" th:if="${notice.getAuthor() == null}" src="/profile/남자.png" alt="유저이미지">
+                            <div class="notice_detail_write_info_inner_box">
+                                <div class="notice_detail_write_info_inner1">
+                                    <div class="notice_detail_write_info_inner1_div_1">
+                                        <div class="notice_detail_admin_name" th:text="${notice.getAuthor() == null ? '관리자' : notice.getAuthor().getId()}"></div>
+                                        <div class="notice_detail_cafe_manager">카페매니저</div>
+                                        <div class="notice_detail_subscribe">+ 구독</div>
+                                        <div class="notice_detail_chat">1:1 채팅</div>
+                                    </div>
+                                    <div class="notice_detail_write_info_inner1_div_2">
+                                        <img>
+                                        <div class="notice_detail_reply">댓글</div>
+                                        <div class="notice_detail_reply_count" th:text="${#lists.size(notice.commentList)}"></div>
+                                        <div class="notice_detail_reply_total_btn">더보기 ></div>
+                                    </div>
+                                </div>
+                                <div class="notice_detail_write_info_inner2">
+                                    <div class="notice_regdate" th:text="${notice.getUpdate_date() != null ? #temporals.format(notice.update_date, 'yyyy-MM-dd HH:mm:ss') : #temporals.format(notice.reg_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                                    <span style="font-size: 10px; color: #333333b8;margin: 3px -4px 0px 6px;">조회수</span><div class="notice_hit" th:text="${notice.getHit()}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="download_list_box" th:if="${files != null && !files.isEmpty()}" style="width: 100px;">
+                    <p class="download_box">다운로드</p>
+                    <ul class="download_list">
+                        <li th:each="file : ${files}" style="height: 30px">
+                            <a th:href="@{|/notice/download?no=${notice.no}&filename=${file.encodedName}|}" th:text="${file.decodedName}" th:attr="title=${file.decodedName}"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="notice_detail_page_content_box">
+                    <div>
+                        <div class="notice_detail_text_content_box">
+                            <div class="notice_detail_text_content_title"></div>
+                            <div class="notice_detail_text_content_cont">
+                                <div id="myTextarea" th:utext="${@commonUtil.markdown(notice.getContent())}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notice_detail-writer_total_box_container">
+                    <div class="notice_detail_writer_box">
+                        <img class="notice_detail-writer_img" th:if="${notice.getAuthor() != null}" th:src="${notice.getAuthor().getProfile()}" alt="유저이미지">
+                        <img class="notice_detail-writer_img" th:if="${notice.getAuthor() == null}" src="/profile/남자.png" alt="유저이미지">
+                        <div class="notice_detail_writer_box_writer" th:text="${notice.getAuthor() == null ? '관리자' : notice.getAuthor().getId()}"></div><span class="notice_detail_writer_box_span">님의 게시글 더보기 ></span>
+                    </div>
+                    <div class="notice_board_count_box">
+                        <div class="notice_board_count_box_inner1">
+                            <div class="notice_likes_box">
+                                <a class="notice_like" th:if="${!isChecked}" th:href="@{|/notice/vote/add/${notice.no}|}" th:text="추천"></a>
+                                <a class="notice_dislike" th:if="${isChecked}" th:href="@{|/notice/vote/remove/${notice.no}|}" th:text="추천"></a>
+                            </div>
+                            <div class="good_count" th:text="${#lists.size(notice.voter)}"></div>
+                        </div>
+                        <div class="notice_board_count_box_inner2">
+                            <img class="reply_img" th:src="@{/img/댓글이미지.png}">
+                            <div class="reply_text">댓글</div>
+                            <div class="reply_count" th:text="${#lists.size(notice.commentList)}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reply_setting_btn">
+                    <a th:href="@{|/notice/detail/${notice.getNo()}?sort=asc|}" class="reg_btn_down">등록순</a>
+                    <a th:href="@{|/notice/detail/${notice.getNo()}?sort=desc|}" class="reg_btn_up">최신순</a>
+                </div>
+                <div class="notice_reply_section">
+                    <div>
+                        <div class="reply_board_section" th:each="comment, loop: ${commentList}">
+                            <img class="notice_reply_writer_img_box" th:if="${comment.getCafeUser() != null}" th:src="${comment.getCafeUser().getProfile()}" alt="유저이미지">
+                            <img class="notice_reply_writer_img_box" th:if="${comment.getCafeUser() == null}" src="/profile/남자.png" alt="유저이미지">
+                            <div class="notice_reply_write_content_total_box">
+                                <div class="notice_reply_writer_name_box" th:text="${comment.getCafeUser.getId()}"></div>
+                                <div class="notice_reply_cont_box" th:text="${comment.getContent()}"></div>
+                                <div class="notice_reply_regdate_box" th:text="${comment.getUpDate() != null ? #temporals.format(comment.getUpDate(), 'yyyy-MM-dd HH:mm:ss') : #temporals.format(comment.getRegDate(), 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            </div>
+                            <div class="reply_modify_delete_btn" th:if="${#authentication.getName() == comment.getCafeUser().getId()}">
+                                <div class="notice_page_reply_delete_btn">
+                                    <a href="javascript:void(0);" th:data-uri="@{|/notice/comment/delete/${comment.getComment_no()}|}" class="delete" sec:authorize="isAuthenticated()" th:text="삭제"></a>
+                                </div>
+                                <div class="notice_page_reply_modify_btn">
+                                    <a th:href="@{|/notice/comment/modify/${comment.getComment_no()}|}" class="modify_btn" sec:authorize="isAuthenticated()" th:text="수정"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="reply_form" th:action="@{|/notice/comment/create/${notice.getNo()}|}" class="notice_reply_form" method="post">
+                        <div class="notice_write_reply" sec:authorize="isAuthenticated()">
+                            <div class="notice_write_reply_writer_name" th:text="${#authentication.getName()}"></div>
+                            <label class="notice_reply">
+                                <textarea class="notice_reply_textarea" name="content" id="content" placeholder="댓글을 작성해주세요."></textarea>
+                            </label>
+                            <div class="file_submit_btn">
+                                <img class="reply_camera_img" th:src="@{/img/카메라.png}">
+                                <input class="reply_submit_input_btn" type="submit" value="답변등록">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+    $(function (){
+       $(".download_list_box").click(function () {
+           $(this).toggleClass("is_selected");
+       })
+   })
+   const delete_elements = document.getElementsByClassName("delete");
+   Array.from(delete_elements).forEach(function(element) {
+       element.addEventListener('click', function() {
+           if(confirm("정말로 삭제하시겠습니까?")) {
+               location.href = this.dataset.uri;
+           };
+       });
+   });
+
+    document.getElementById('reply_form').addEventListener('submit', function(event) {
+                    const content = document.getElementById('content').value.trim();
+
+                    if (content === '') {
+                        alert('댓글을 입력해 주세요.');
+                        event.preventDefault(); // 폼 제출을 막음
+                    }
+              });
+
+</script>
+</html>

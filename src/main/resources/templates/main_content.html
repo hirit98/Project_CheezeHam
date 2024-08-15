@@ -1,0 +1,188 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container">
+    <div class="content_ppr_banner_board">
+        <div class="content_ppr_banner_board_box">
+            <p>▶cheezeHam event◀</p>
+            <ul class="content_ppr_banner_ul">
+                <li><img th:src="@{/img/밀웜광고.jpg}"></li>
+                <li><img th:src="@{/img/햄사모체험단.jpg}" ></li>
+            </ul>
+        </div>
+    </div>
+    <div class="board_box_container">
+        <div class="total_board_list">
+            <div class="total_board_list_text_box">
+                <h3>전체글보기</h3>
+                <span><a th:href="@{/total/list}">더보기❯</a></span>
+            </div>
+            <div class="total_board_list_inner_text">
+                <table class="total_board_table">
+                    <thead>
+                        <tr class="total_board_table_tr">
+                            <th></th><th>유형</th><th>제목</th><th>작성자</th><th>등록날짜</th><th>조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="total_board_notice_list" th:each="notice, loop : ${importantNotice}">
+                            <td></td>
+                            <td>
+                                <div class="notice_mark">
+                                    <p>공지</p>
+                                </div>
+                            </td>
+                            <td class="notice_title"><a th:href="@{|/notice/detail/${notice.getNo()}|}" th:text="${notice.getTitle()}"></a></td>
+                            <td th:text="${notice.getAuthor() == null ? '관리자' : notice.getAuthor().getId()}"></td>
+                            <td th:text="${notice.update_date != null ? #temporals.format(notice.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(notice.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${notice.getHit()}"></td>
+                        </tr>
+                        <tr class="total_board_list_text" th:each="total, loop : ${recentTotal}">
+                            <td>•</td>
+                            <td th:text="${total.type}">
+                            </td>
+                            <td style="width: 399.19px;" th:switch="${total.type}">
+                                <a th:case="'공지'" th:href="@{|/notice/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'중요'" th:href="@{|/notice/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'이벤트'" th:href="@{|/event/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'고양이'" th:href="@{|/boast/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'햄스터'" th:href="@{|/boast/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'가입인사'" th:href="@{|/reg_greeting/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'자유'" th:href="@{|/free/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'질문답변'" th:href="@{|/qna/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'햄스터장터'" th:href="@{|/ham/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'고양이장터'" th:href="@{|/cat/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'건의'" th:href="@{|/suggest/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                                <a th:case="'신고'" th:href="@{|/accuse/detail/${total.getNo()}|}" th:text="${total.getTitle()}"></a>
+                            </td>
+                            <td th:if="${total.type eq '공지' || total.type eq '중요' || total.type eq '이벤트'}" th:text="${total.getAuthor() == null ? '관리자' : total.getAuthor().getId()}"></td>
+                            <td th:if="${total.type eq '고양이' || total.type eq '햄스터' || total.type eq '가입인사' || total.type eq '자유' || total.type eq '질문답변' || total.type eq '햄스터장터' || total.type eq '고양이장터' || total.type eq '건의' || total.type eq '신고'}"
+                                th:text="${total.getAuthor() == null ? '익명' : total.getAuthor().getId()}"></td>
+                            <td th:text="${total.updateDate != null ? #temporals.format(total.updateDate, 'yyyy-MM-dd HH:mm') : #temporals.format(total.regDate, 'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${total.getHit()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="boast_board_list">
+            <div class="total_board_list_text_box">
+                <h3>자랑게시판</h3>
+                <span><a th:href="@{/boast/list}">더보기❯</a></span>
+            </div>
+            <div class="total_board_list_inner_text">
+                <table class="total_board_table">
+                    <thead>
+                    <tr class="total_board_table_tr">
+                        <th></th><th>유형</th><th>제목</th><th>작성자</th><th>등록날짜</th><th>조회수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="event_board_notice_list" th:each="notice, loop : ${importantNotice}">
+                        <td></td>
+                        <td>
+                            <div class="notice_mark">
+                                <p>공지</p>
+                            </div>
+                        </td>
+                        <td class="notice_title"><a th:href="@{|/notice/detail/${notice.getNo()}|}" th:text="${notice.getTitle()}"></a></td>
+                        <td th:text="${notice.getAuthor() == null ? '관리자' : notice.getAuthor().getId()}"></td>
+                        <td th:text="${notice.update_date != null ? #temporals.format(notice.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(notice.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${notice.getHit()}"></td>
+                    </tr>
+                    <tr class="event_board_list_text" th:each="boast, loop : ${recentBoast}">
+                        <td>•</td>
+                        <td th:text="${boast.getType()}"></td>
+                        <td><a th:href="@{|/boast/detail/${boast.getNo()}|}" th:text="${boast.getTitle()}"></a></td>
+                        <td th:text="${boast.getAuthor() == null ? '익명' : boast.getAuthor().getUsername()}"></td>
+                        <td th:text="${boast.update_date != null ? #temporals.format(boast.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(boast.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${boast.getHit()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="board_box_inner_container">
+            <div>
+                <div class="event_board">
+                    <div>
+                        <div class="event_board_list_text_box">
+                            <h3>이벤트</h3>
+                            <span><a th:href="@{/event/list}">더보기❯</a></span>
+                        </div>
+                        <div class="event_board_list_inner_text">
+                            <table class="event_board_table">
+                                <thead>
+                                <tr class="event_board_table_tr">
+                                    <th></th><th>유형</th><th>제목</th><th>등록날짜</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="event_board_notice_list" th:each="notice, loop : ${importantNotice}">
+                                    <td></td>
+                                    <td>
+                                        <div class="notice_mark">
+                                            <p>공지</p>
+                                        </div>
+                                    </td>
+                                    <td class="notice_title"><a th:href="@{|/notice/detail/${notice.getNo()}|}" th:text="${notice.getTitle()}"></a></td>
+                                    <td th:text="${notice.update_date != null ? #temporals.format(notice.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(notice.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                                </tr>
+                                <tr class="event_board_list_text" th:each="event, loop : ${recentEvent}">
+                                    <td>•</td>
+                                    <td>이벤트</td>
+                                    <td><a th:href="@{|/event/detail/${event.getNo()}|}" th:text="${event.getTitle()}"></a></td>
+                                    <td th:text="${event.update_date != null ? #temporals.format(event.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(event.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="notice_board">
+                    <div>
+                        <div class="notice_board">
+                            <div>
+                                <div class="notice_board_list_text_box">
+                                    <h3>공지사항</h3>
+                                    <span><a th:href="@{/notice/list}">더보기❯</a></span>
+                                </div>
+                                <div class="notice_board_list_inner_text">
+                                    <table class="notice_board_table">
+                                        <thead>
+                                        <tr class="notice_board_table_tr">
+                                            <th></th><th>유형</th><th>제목</th><th>등록날짜</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="notice_board_notice_list" th:each="notice, loop : ${importantNotice}">
+                                            <td></td>
+                                            <td>
+                                                <div class="notice_mark">
+                                                    <p>공지</p>
+                                                </div>
+                                            </td>
+                                            <td class="notice_title"><a th:href="@{|/notice/detail/${notice.getNo()}|}" th:text="${notice.getTitle()}"></a></td>
+                                            <td th:text="${notice.update_date != null ? #temporals.format(notice.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(notice.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                                        </tr>
+                                        <tr class="notice_board_list_text" th:each="notice, loop : ${recentNotice}">
+                                            <td>•</td>
+                                            <td th:text="${notice.getType()}"></td>
+                                            <td><a th:href="@{|/notice/detail/${notice.getNo()}|}" th:text="${notice.getTitle()}"></a></td>
+                                            <td th:text="${notice.update_date != null ? #temporals.format(notice.update_date, 'yyyy-MM-dd HH:mm') : #temporals.format(notice.reg_date, 'yyyy-MM-dd HH:mm')}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+
+</script>
+</html>

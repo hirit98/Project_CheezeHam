@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원탈퇴</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/resign.css}" type="text/css">
+</head>
+<body>
+<main>
+    <div class="resign_content_box">
+        <div class="resign_title_box">
+            <h3>회원 비밀번호 확인</h3>
+        </div>
+        <div class="resign_form_box">
+            <p style="font-weight: 600">비밀번호를 한번 더 입력해주세요.</p>
+            <p>비밀번호를 입력후 탈퇴버튼을 누르면 회원탈퇴가 완료됩니다.</p>
+            <p style="color: red">※&nbsp회원탈퇴시 작성한 게시글, 댓글은 복구 하실수 없습니다.</p>
+            <div class="login_id_box">
+                <span style="font-weight: 600">로그인 한 ID : </span>
+                <span style="color: tomato" th:text="${#authentication.getName()}"></span>
+            </div>
+            <form th:action="@{/user/resign}" method="post">
+                <input id="resign_pwd_input" type="password" name="password" required/>
+                <div class="resign_error_box" style="display: none;">
+                    <p style="color: red;">비밀번호가 일치하지 않습니다.</p>
+                </div>
+                <input class="resign_submit_btn" type="submit" value="탈퇴하기">
+            </form>
+        </div>
+    </div>
+    <div class="resign_close_box">
+        <button class="resign_close_btn" type="button" onclick="window.close();" th:text="취소"></button>
+    </div>
+</main>
+</body>
+<script>
+    $(document).ready(function() {
+        $("form").on("submit", function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr("action"),
+                type: "POST",
+                data: $(this).serialize(), // 폼 데이터를 직렬화하여 전송
+                success: function(success) {
+                    if (success) {
+                        alert("탈퇴에 성공했습니다.");
+                        if (window.opener) {
+                            window.opener.location.href = "/user/logout";
+                        }
+                        window.close();
+                    } else {
+                        $(".resign_error_box").show();
+                    }
+                },
+                error: function() {
+                    alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                }
+            });
+        });
+    });
+</script>
+</html>

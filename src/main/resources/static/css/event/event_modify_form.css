@@ -1,0 +1,37 @@
+.event_reply_modify_form{
+    margin: 8px 0px 9px 0px;
+    border-radius: 5px;
+    border: 2px solid #f9a1a15e;
+    height: 178px;
+    width: 1080px;
+}
+.modify_reply_textarea{
+    resize: none;
+    width: 1000px;
+    height: 100px;
+}
+.modify_file_submit_btn{
+    margin: 20px 0px 0px 6px;
+    opacity: 0.7;
+    width: 22px;
+    height: 22px;
+}
+.reply_modify_insert_cancel_btn_box{
+    display:flex;
+}
+.event_write_reply_modify_writer_name{
+    margin: 6px 0px 0px 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.modify_reply_camera_img{
+    opacity: 0.7;
+    width: 22px;
+    height: 22px;
+}
+.event_write_reply_modify_writer_text_area{
+    margin: 7px 0px -6px 6px;
+}
+.input_content{
+    display:none;
+}

@@ -1,0 +1,198 @@
+.write_layout_title{
+    border-bottom: 1px solid #00000038;
+    display: flex;
+    height: 75px;
+    width: 1080px;
+    justify-content: space-between;
+    align-items: center;
+}
+.write_layout_title h2{
+    margin-left: 10px;
+    font-size: 23px;
+    font-weight: 500;
+}
+.write_btn{
+    display: flex;
+}
+.write_btn_inner_box{
+    margin-right: 10px;
+    font-size: 13px;
+    color: #333333c9;
+    box-shadow: 2px 2px 0px 0px #00000038;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #00000030;
+    height: 31px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+}
+.write_layout_content_title_box{
+    margin: 10px 0px 0px 0px;
+    border: 1px solid #00000029;
+    width: 1080px;
+    height: 140px;
+    border-radius: 16px;
+}
+.write_type_select_box{
+    justify-content: start;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.write_type_select_box img{
+    opacity: 0.6;
+    top: 360px;
+    z-index: -1;
+    left: 638px;
+    position: absolute;
+    height: 22px;
+    width: 22px;
+}
+#eventSelect{
+    border-bottom: 1px solid #0000003d;
+    margin: 10px 0px 5px 15px;
+    font-size: 16px;
+    height: 37px;
+    width: 230px;
+}
+.write_title_box{
+    margin: 0px 0px 0px 14px;
+    font-weight: 600;
+    font-size: 16px;
+}
+.warning_text_box_p{
+    display: flex;
+    border: 1px solid #00000026;
+    background: #ebe9e98f;
+    width: 1080px;
+    height: 140px;
+    margin: 9px 0px 19px 0px;
+    align-items: center;
+}
+.warning_text_box_p p{
+    font-size: 14px;
+    margin: -2px 0px 0px 11px;
+}
+.write_title_box{
+    display:flex;
+}
+.insert_title{
+    border-radius: 7px;
+    resize: none;
+    width: 1000px;
+    height: 68px;
+    border: 1px solid #00000030;
+}
+.write_title_box_inner1{
+    margin: 29px -5px 0px 1px;
+}
+.write_title_box_inner2{
+    margin: 7px 0px 0px 19px;
+}
+.write_type_select_box option{
+    font-size:16px;
+}
+.write_content_text_box{
+    margin: 13px 0px 0px 0px;
+    display: flex;
+}
+.write_content_box_inner1{
+    font-weight: 600;
+    font-size: 14px;
+}
+.write_content_box_inner2 textarea{
+    background: #f3f3f300;
+    margin: 0px 0px 14px 6px;
+    border-radius: 6px;
+    width: 1046px;
+    height: 265px;
+    border: 1px solid #0000002e;
+    resize: none;
+}
+.upload_list_box {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 30px;
+}
+.upload_list_box .upload_line {
+    height: 30px;
+}
+.upload_list_box .name_title {
+    width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    margin-right: 10px;
+    color: #333;
+    padding-left: 10px;
+}
+.upload_list_box .file_remove_btn .remove_btn{
+    width: 20px;
+    height: 20px;
+    margin-bottom: 4px;
+    margin-left: 5px;
+    opacity: 0.8;
+}
+.upload_line:hover .name_title {
+    text-decoration: underline;
+    font-weight: 600;
+}
+input[type=file]::file-selector-button {
+    width: 120px;
+    height: 35px;
+    font-size: 13px;
+    background: #fff;
+    border-left:none;
+    border-top:none;
+    border-bottom:none;
+    border-right: 1px solid #00000029;
+    cursor: pointer;
+    &:hover {
+        background: rgb(77,77,77);
+        color: #fff;
+    }
+}
+.file_upload_box{
+    margin-top: -1px;
+    border: 1px solid #d9d7d7;
+    height: 37px;
+    border-radius: 3px;
+}
+.notice_write_type_select_box {
+    display: inline-block;
+}
+.notice_write_type_select_box img{
+    opacity: 0.6;
+    top: 355px;
+    z-index: -1;
+    left: 630px;
+    position: absolute;
+    height: 22px;
+    width: 22px;
+}
+.check_important {
+    display: inline-block;
+}
+.check_important input {
+    appearance: auto;
+}
+.file_upload_modal{
+    font-size: 15px;
+    background: #ff000012;
+    font-weight: 600;
+    color: #bf2e2e;
+    display: none;
+    left: 498px;
+    bottom: 33px;
+    height: 66px;
+    position: absolute;
+    width: 901px;
+    border: 1px solid #eba7a7;
+}
+.file_upload_modal p{
+    text-align: center;
+    margin-top: 23px;
+}

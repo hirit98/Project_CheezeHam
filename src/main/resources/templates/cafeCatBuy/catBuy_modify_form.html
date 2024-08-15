@@ -1,0 +1,225 @@
+<html layout:decorate="~{main_write_layout}">
+<div layout:fragment="content" class="write_container">
+    <form id="writeForm" th:object="${catBuyForm}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">
+        <div class="write_layout_title">
+            <h2>카페 글쓰기</h2>
+            <div class="write_btn">
+                <div class="write_btn_inner_box">
+                    <input type="submit" value="등록" class="event_insert_btn">
+                </div>
+            </div>
+        </div>
+        <div class="write_layout_content">
+            <div class="write_layout_content_title_box">
+                <div class="write_type_select_box">
+                    <img class="write_type_select_box_img" th:src="@{/img/아래꺽쇠-removebg-preview.png}">
+                    <select id="eventSelect" name="boastSelect">
+                        <option value="고양이장터">고양이 장터</option>
+                    </select>
+                </div>
+                <div class="write_title_box">
+
+                    <div class="write_title_box_inner1">제목</div>
+                    <div class="write_title_box_inner2">
+                        <label for="title" class="event_label"></label>
+                        <textarea id="title" th:field="*{title}" class="insert_title"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="warning_text_box">
+                <div class="warning_text_box_p">
+                    <p>
+                        카페에 홍보글, 악성글, 비방글은 금지합니다.<br><br>
+                        햄스터와 고양이를 관심으로 모인 단체입니다.<br>
+                        카페와 무관한 홍보글 등록이나, 비방 목적으로 가입한 경우 글 삭제 또는 강퇴됩니다.
+                    </p>
+                </div>
+            </div>
+            <div class="write_layout_content_inner_box">
+                <div id="content_toast_editor">
+
+                </div>
+
+                <div class="file_upload_box">
+                    <input type="file" name="files" id="files" multiple />
+                </div>
+                <div class="file_upload_modal" id="fileUploadModal">
+                    <p>빈 파일은 업로드 할 수 없습니다</p>
+                </div>
+                <div class="upload_list_box" th:if="${catBuy.getFile_path() != null}" style="width: 200px">
+                    <input type="hidden" id="cat_no" th:value="${catBuy.getNo()}">
+                    <ul class="upload_list" id="uploadList">
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="write_content_text_box">
+                <div class="write_content_box_inner1"></div>
+                <div class="write_content_box_inner2">
+                    <label for="content" class="event_label"></label>
+                    <textarea id="content" name="content" th:field="*{content}" class="input_content"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script layout:fragment="script" type='text/javascript'>
+    document.addEventListener('DOMContentLoaded', function() {
+      const contentValue = document.getElementById('content').value;
+      const editor = new toastui.Editor({
+        el: document.querySelector('#content_toast_editor'), // 에디터를 적용할 요소 (컨테이너) 에디터가 들어갈 위치 지정!
+        height: '500px',                        // 에디터 영역의 높이 값 (OOOpx 이거나 auto 써줌)
+        initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg) 둘중에 하나만 선택 해야함!
+        initialValue: contentValue,     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+        previewStyle: 'vertical'           // 마크다운 프리뷰 스타일 (tab || vertical)
+      });
+
+      editor.on('change', function() {  //에디터에 입력한 값이 실시간으로 textarea에 넣어줌
+        const markdownValue = editor.getMarkdown(); // 마크다운 값 가져오기
+        document.getElementById('content').value = markdownValue; // textarea에 값 설정
+      });
+
+       document.getElementById('writeForm').addEventListener('submit', function(event) {
+            const content = document.getElementById('content').value.trim();
+            const title = document.getElementById('title').value.trim();
+
+            if (content === '' && title === '') {
+                alert('제목과 내용을 입력해 주세요.');
+                event.preventDefault(); // 폼 제출을 막음
+            }else if (title === ''){
+                 alert('제목을 입력해 주세요.');
+                event.preventDefault(); // 폼 제출을 막음
+            }else if (content === ''){
+                alert('내용을 입력해 주세요.');
+                event.preventDefault(); // 폼 제출을 막음
+                return false; // 폼 제출을 확실히 막음
+            }
+
+            const fileInput = document.getElementById('files');
+            const files = fileInput.files;
+            let emptyFileFound = false;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file.size === 0) {
+                    emptyFileFound = true;
+                    break;
+                }
+            }
+
+            if (emptyFileFound) {
+                showModal();
+                event.preventDefault();
+            }
+        });
+        function showModal() {
+            const modal = document.getElementById('fileUploadModal');
+            fadeIn(modal, 300); // 모달을 400ms 동안 서서히 나타나게 함
+            setTimeout(() => {
+                fadeOut(modal, 400); // 2초 후 모달을 400ms 동안 서서히 사라지게 함
+            }, 2000); // 2초 동안 모달을 표시
+        }
+
+        function fadeIn(element, duration) {
+            let opacity = 0;
+            element.style.display = 'block';
+            const interval = 10;
+            const step = interval / duration;
+            function fade() {
+                opacity += step;
+                if (opacity >= 1) {
+                    opacity = 1;
+                    clearInterval(fading);
+                }
+                element.style.opacity = opacity;
+            }
+            const fading = setInterval(fade, interval);
+        }
+
+        function fadeOut(element, duration) {
+            let opacity = 1;
+            const interval = 10;
+            const step = interval / duration;
+            function fade() {
+                opacity -= step;
+                if (opacity <= 0) {
+                    opacity = 0;
+                    clearInterval(fading);
+                    element.style.display = 'none';
+                }
+                element.style.opacity = opacity;
+            }
+            const fading = setInterval(fade, interval);
+        }
+     });
+ $(function () {
+        loadFileList();
+
+        // Controller에 FileList를 return 해줄 메서드 만들어야함. (notice-> 'findFiles')
+        function loadFileList() {
+            var no = $("#cat_no").val();
+            $.ajax({
+                type: "GET",
+                url: `/cat/file/findList/${no}`,
+                success: function (files) {
+                    var uploadList = $('#uploadList');
+                    uploadList.empty();
+                    if (files.length != 0) {
+                        files.forEach(function (file) {
+                            var listItem = $('<li>').addClass('upload_line');
+                            var fileNameSpan = $('<span>')
+                                .addClass('name_title')
+                                .text(file.decodedName)
+                                .attr('title', file.decodedName);
+
+                            var removeLink = $('<a>')
+                                .addClass('file_remove_btn')
+                                .attr('href', 'javascript:void(0);')
+                                .attr('data-uri', `/cat/file/remove?no=${no}&filename=${file.encodedName}`);
+
+                            var removeImg = $('<img>')
+                                .addClass('remove_btn')
+                                .attr('src', '/img/remove_btn.png');
+
+                            removeLink.append(removeImg);
+                            listItem.append(fileNameSpan);
+                            listItem.append(removeLink);
+                            uploadList.append(listItem);
+                        });
+                    } else {
+                         var uploadListBox = $('.upload_list_box');
+                        uploadListBox.css("display", "none");
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        $('#uploadList').on('click', '.file_remove_btn', function (e) {
+            e.preventDefault();
+            var uri = $(this).data('uri');
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                $.ajax({
+                    type: "GET",
+                    url: uri,
+                    success: function (response) {
+                        alert("선택한 파일이 성공적으로 삭제되었습니다.");
+                        loadFileList();
+                    },
+                    error: function () {
+                        alert("파일 삭제에 실패했습니다.");
+                    }
+                });
+            }
+        });
+    })
+
+
+</script>
+</html>

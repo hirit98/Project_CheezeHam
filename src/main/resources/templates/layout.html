@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:src="@{/js/motion.js}"></script>
+    <script th:src="@{/js/check_login.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+    <title>cheezeHam</title>
+    <!-- CSRF 토큰 관련 메타 태그 추가 -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<body>
+<div>
+    <nav th:replace="~{main_nav :: navbarFragment}"></nav>
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+    <div class="body_main_total">
+        <div class="body_main">
+            <div th:replace="~{main_asidebar :: asidebarFragment}"></div>
+            <div>
+                <th:block layout:fragment="content"></th:block>
+            </div>
+        </div>
+    </div>
+    <div>
+        <footer th:replace="~{main_footer :: footerFragment}"></footer>
+    </div>
+    <!-- 기본 템플릿 안에 삽입될 내용 End -->
+</div>
+
+<th:block layout:fragment="script">
+
+</th:block>
+
+</body>
+</html>

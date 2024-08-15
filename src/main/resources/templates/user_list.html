@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원관리</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/user_list.css}" type="text/css">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<body>
+    <main>
+        <div class="management_title">
+            <h2>회원관리</h2>
+        </div>
+        <div class="management_main">
+            <div class="management_view_type">
+                <a th:href="@{/user/list}" class="management_type_btn" th:text="'일반회원'" th:classappend="${type eq 'user'} ? 'on'"></a>
+                <a th:href="@{|/user/list?type=admin|}" class="management_type_btn" th:text="'관리자'" th:classappend="${type eq 'admin'} ? 'on'"></a>
+            </div>
+            <div class="management_content">
+                <div class="management_user_table_box">
+                    <div class="management_search_form_box">
+                        <p class="management_count" th:if="${type eq 'user'}">총 <b th:text="${paging.getTotalElements()}"></b>명의 일반회원이 있습니다.</p>
+                        <p class="management_count" th:if="${type eq 'admin'}">총 <b th:text="${paging.getTotalElements()}"></b>명의 관리자가 있습니다.</p>
+                        <div class="management_search_form">
+                            <form th:action="@{/user/list}" method="get" id="search_form">
+                                <input class="management_search_input" name="keyword" type="text" placeholder="Search" th:value="${keyword}">
+                                <button class="search_btn" type="submit"></button>
+                                <input type="hidden" name="type" th:value="${type}">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="management_table_content">
+                        <table class="management_table">
+                            <colgroup>
+                                <col style="width: 70px;">
+                                <col style="width: 125px;">
+                                <col style="width: 70px;">
+                                <col>
+                                <col style="width: 105px;">
+                                <col style="width: 70px;">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="col">No.</th><th scope="col">아이디</th><th scope="col">성명</th>
+                                <th scope="col">이메일</th><th scope="col">연락처</th><th scope="col">등급</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user, loop: ${paging}">
+                                <td class="view_user_profile" th:text="${user.getNo()}" th:data-no="${user.getNo()}"></td>
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getUsername()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
+                                <td th:text="${user.getPhone()}"></td>
+                                <td th:text="${user.getGrade()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 페이징 시작 -->
+                    <div class="management_pagination">
+                        <div class="pagination" th:if="${!paging.isEmpty()}">
+                            <a class="first_btn" th:if="${!paging.isFirst()}" href="javascript:void(0)" th:data-page="${0}"><span><<</span></a>
+                            <a class="prev_btn" th:if="${paging.number != 0}" href="javascript:void(0)" th:data-page="${paging.number - 1}"><span><</span></a>
+                            <a th:each="page: ${#numbers.sequence(startBlock - 1, endBlock - 1)}"
+                               th:classappend="${page == paging.number} ? 'on'" class="page_link" th:text="${page+1}" href="javascript:void(0)" th:data-page="${page}"></a>
+                            <a class="next_btn" th:if="${paging.hasNext()}" href="javascript:void(0)" th:data-page="${paging.number + 1}"><span>></span></a>
+                            <a class="last_btn" th:if="${!paging.isLast()}" href="javascript:void(0)" th:data-page="${paging.getTotalPages() - 1}"><span>>></span></a>
+                        </div>
+                        <form id="actionForm" action="/user/list" method="get">
+                            <input type="hidden" id="kw" name="keyword" th:value="${keyword}">
+                            <input type="hidden" id="page" name="page" th:value="${paging.number}">
+                            <input type="hidden" id="type" name="type" th:value="${type}">
+                        </form>
+                    </div>
+                    <!-- 페이징 끝 -->
+                </div>
+                <div class="management_user_detail_box">
+                    <div class="detail_title">
+                        <p>회원 정보</p>
+                    </div>
+                    <div class="detail_form_box" style="display: none;">
+                        <form id="modifyForm">
+                            <div class="detail_form_box_1">
+                                <div class="form_box_1-1">
+                                    <div class="user_no_box">
+                                        <p>회원번호</p>
+                                        <div class="user_no_view"></div>
+                                        <input type="hidden" id="user_no" name="no">
+                                    </div>
+                                    <div class="user_name_box">
+                                        <p>이름</p>
+                                        <div class="user_name_view"></div>
+                                    </div>
+                                    <div class="user_gender_box">
+                                        <p>성별</p>
+                                        <div class="user_gender_view">
+                                            <ul class="gender_list" id="identityGender">
+                                                <li class="radio_item">
+                                                    <input type="radio" id="male" name="gender" value="male" class="blind">
+                                                    <label for="male">남</label>
+                                                </li>
+                                                <li class="radio_item">
+                                                    <input type="radio" id="female" name="gender" value="female" class="blind">
+                                                    <label for="female">여</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form_box_1-2">
+                                    <div class="user_id_box">
+                                        <p>아이디</p>
+                                        <div class="user_id_view"></div>
+                                    </div>
+                                    <div class="user_birthday_box">
+                                        <p>생년월일</p>
+                                        <div class="user_birthday_view">
+                                            <div class="birthday_year_text"></div>
+                                            <div class="birthday_month_text"></div>
+                                            <div class="birthday_day_text"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail_form_box_2">
+                                <div style="width: 170px; display: inline-block">
+                                    <p>회원 등급</p>
+                                    <div class="select_grade_component" style="width: 140px;">
+                                        <a class="select_box" id="grade_form"></a>
+                                        <ul class="select_list">
+                                            <li><a id="ham_seed">해씨</a></li>
+                                            <li><a id="ham_wheel">쳇바퀴</a></li>
+                                            <li><a id="cat_fishing_rod">낚싯대</a></li>
+                                            <li><a id="cat_chur">츄르</a></li>
+                                            <li><a id="set_admin">관리자</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="grade">
+                                </div>
+                                <div class="user_phone_box">
+                                    <p>회원 연락처</p>
+                                    <div class="user_phone_view"></div>
+                                </div>
+                                <div class="user_email_box">
+                                    <p>회원 이메일</p>
+                                    <div class="user_email_view"></div>
+                                </div>
+                            </div>
+                            <div class="detail_form_box_3">
+                                <div class="user_regdate_box">
+                                    <p>가입일시</p>
+                                    <div class="user_regdate_view"></div>
+                                </div>
+                                <div class="form_btn_box">
+                                    <button class="form_delete_btn">회원 삭제</button>
+                                    <button class="form_modify_btn" type="submit">회원 정보 수정</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script type='text/javascript'>
+    $(function () {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        // 페이지 링크 클릭 처리
+        $('.page_link, .prev_btn, .next_btn, .first_btn, .last_btn').on('click', function (e) {
+            e.preventDefault();
+            $('#page').val($(this).data('page'));
+            $('#actionForm').submit();
+        });
+
+        $(".select_grade_component").click(function () {
+            $(this).toggleClass("is_selected");
+        });
+
+        $('#ham_seed').click(function (event) {
+            event.preventDefault();
+            updateFieldAndText('해씨');
+        });
+
+        $('#ham_wheel').click(function (event) {
+            event.preventDefault();
+            updateFieldAndText('쳇바퀴');
+        });
+
+        $('#cat_fishing_rod').click(function (event) {
+            event.preventDefault();
+            updateFieldAndText('낚싯대');
+        });
+
+        $('#cat_chur').click(function (event) {
+            event.preventDefault();
+            updateFieldAndText('츄르');
+        });
+
+        $('#set_admin').click(function (event) {
+            event.preventDefault();
+            updateFieldAndText('관리자');
+        });
+
+        $(document).on('click', '.view_user_profile', function () {
+            var no = $(this).data('no');
+            $.ajax({
+                type: "GET",
+                url: `/user/find/${no}`,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (user) {
+                    clearUserData();
+                    $('.detail_form_box').css('display', 'block');
+                    if (user) {
+                        updateUserData(user);
+                    }
+                },
+                error: function () {
+                    alert('사용자 정보를 가져오는데 실패했습니다.');
+                }
+            });
+        });
+
+        $(document).on('click', '.form_delete_btn', function (e) {
+            e.preventDefault();
+            if (confirm('정말로 삭제하시겠습니까?')) {
+                var no = $('#user_no').val();
+                $.ajax({
+                    type: 'DELETE',
+                    url: `/user/remove/${no}`,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function () {
+                        alert('성공적으로 삭제했습니다.');
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('회원 삭제에 실패했습니다.');
+                    }
+                });
+            }
+        });
+
+        // 회원 정보 수정
+        $(document).on('submit', '#modifyForm', function (e) {
+            e.preventDefault();
+            var no = $('#user_no').val();
+            var grade = $('#grade').val();
+            $.ajax({
+                type: 'POST',
+                url: `/user/modify/${no}`,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                data: { grade: grade },
+                success: function () {
+                    alert('회원 정보가 수정되었습니다.');
+                    location.reload();
+                },
+                error: function () {
+                    alert('회원 정보 수정에 실패했습니다.');
+                }
+            });
+        });
+    })
+
+    function updateFieldAndText(value) {
+        $('#grade_form').text(value);
+        $("#modifyForm #grade").val(value);
+    }
+
+    function clearUserData() {
+        // 기본적으로 공백을 추가하여 스타일이 틀어지지 않도록 함
+        $('.user_no_view').text('\u00A0');
+        $('.user_name_view').text('\u00A0');
+        $('.user_id_view').text('\u00A0');
+        $('.birthday_year_text').text('\u00A0');
+        $('.birthday_month_text').text('\u00A0');
+        $('.birthday_day_text').text('\u00A0');
+        $('.user_phone_view').text('\u00A0');
+        $('.user_email_view').text('\u00A0');
+        $('.user_regdate_view').text('\u00A0');
+        $('#identityGender input[name="gender"]').prop('checked', false); // 모든 성별 체크박스 초기화
+        $('#grade_form').text('\u00A0');
+        $("#modifyForm #grade").val('');
+        $('#modifyForm #user_no').val('');
+    }
+
+    function updateUserData(user) {
+        $('.user_no_view').text(user.no || '\u00A0');
+        $('#modifyForm #user_no').val(user.no || '')
+        $('.user_name_view').text(user.username || '\u00A0');
+        if (user.gender === 'male') {
+            $('#male').prop('checked', true);
+        } else if (user.gender === 'female') {
+            $('#female').prop('checked', true);
+        }
+        $('.user_id_view').text(user.id || '\u00A0');
+        var birthdayParts = user.birthday ? user.birthday.split('-') : ['\u00A0', '\u00A0', '\u00A0'];
+        $('.birthday_year_text').text(birthdayParts[0]);
+        $('.birthday_month_text').text(birthdayParts[1]);
+        $('.birthday_day_text').text(birthdayParts[2]);
+        $('#grade_form').text(user.grade || '\u00A0');
+        $("#modifyForm #grade").val(user.grade || '');
+        $('.user_phone_view').text(user.phone || '\u00A0');
+        $('.user_email_view').text(user.email || '\u00A0');
+        $('.user_regdate_view').text(user.regdate ? new Date(user.regdate).toLocaleString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        }) : '\u00A0');
+    }
+
+</script>
+</html>

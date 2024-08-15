@@ -1,0 +1,155 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container">
+    <div class="event_detail_page_container_total_box">
+        <div class="event_detail_page_container">
+            <div class="event_detail_page_pre_next_btn">
+                <div class="modify_delete_btn" th:if="${#authentication.principal.username == regGreeting.getAuthor()?.getId()}">
+                    <!--     <p th:text="${'Authentication username: ' + #authentication.principal.username}"></p>
+                        <div class="event_detail_admin_name" th:text="${event.getAuthor() == null ? '관리자' : event.getAuthor().getUsername()}"></div>-->
+                    <div class="event_page_pre_btn">
+                        <a href="javascript:void(0);" th:data-uri="@{|/reg_greeting/delete/${regGreeting.getNo()}|}" class="delete" sec:authorize="isAuthenticated()" th:text="삭제"></a>
+                    </div>
+                    <div class="event_page_pre_btn">
+                        <a th:href="@{|/reg_greeting/modify/${regGreeting.getNo()}|}" class="modify_btn" sec:authorize="isAuthenticated()" th:text="수정"></a>
+                    </div>
+                </div>
+                <div class="modify_delete_btn">
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="event_pre_next_list_btn_box">
+                    <div th:if="${hasPrevious}" class="event_page_pre_btn">
+                        <a th:href="@{/reg_greeting/detail/__${#strings.toString(regGreeting.getNo() - 1)}__}">이전글</a><span class="event_detail_pre_btn">❯</span>
+                    </div>
+                    <div th:if="${hasNext}" class="notice_page_next_btn">
+                        <a th:href="@{/reg_greeting/detail/__${#strings.toString(regGreeting.getNo() + 1)}__}">다음글</a><span class="event_detail_next_btn">❯</span>
+                    </div>
+                    <div class="event_page_list_btn">
+                        <a th:href="@{/reg_greeting/list}">목록</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="event_detail_page_content">
+                <div class="event_detail_page_title_box">
+                    <div>
+                        <div class="event_detail_page_event_list">가입인사 ></div>
+                        <div class="event_detail_page_title" th:text="${regGreeting.getTitle()}"></div>
+                        <div class="event_detail_write_info">
+                            <img class="event_detail_admin_img" th:if="${regGreeting.getAuthor() != null}" th:src="${regGreeting.getAuthor().getProfile()}" alt="유저이미지">
+                            <img class="event_detail_admin_img" th:if="${regGreeting.getAuthor() == null}" src="/profile/남자.png" alt="유저이미지">
+                            <div class="event_detail_write_info_inner_box">
+                                <div class="event_detail_write_info_inner1">
+                                    <div class="event_detail_write_info_inner1_div_1">
+                                        <div class="event_detail_admin_name" th:text="${regGreeting.getAuthor() == null ? '익명' : regGreeting.getAuthor().getId()}"></div>
+                                        <div class="event_detail_cafe_manager" th:text="${regGreeting.getAuthor() == null ? '해씨' : regGreeting.getAuthor().getGrade() eq '관리자' ? '카페매니저' : regGreeting.getAuthor().getGrade()}"></div>
+                                        <div class="event_detail_subscribe">+ 구독</div>
+                                        <div class="event_detail_chat">1:1 채팅</div>
+                                    </div>
+                                    <div class="event_detail_write_info_inner1_div_2">
+                                        <img>
+                                        <div class="event_detail_reply">댓글</div>
+                                        <div class="event_detail_reply_count" th:text="${#lists.size(regGreeting.commentList)}"></div>
+                                    </div>
+                                </div>
+                                <div class="event_detail_write_info_inner2">
+                                    <div class="event_regdate" th:text="${regGreeting.update_date != null ? #temporals.format(regGreeting.update_date, 'yyyy-MM-dd HH:mm:ss') : #temporals.format(regGreeting.reg_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                                    <span style="font-size: 10px; color: #333333b8;margin: 3px -4px 0px 6px;">조회수</span><div class="event_hit" th:text="${regGreeting.getHit()}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="event_detail_page_content_box">
+                    <div>
+                        <div class="event_detail_text_content_box">
+                            <div class="event_detail_text_content_title"></div>
+                            <div class="event_detail_text_content_cont">
+                                <p th:utext="${@commonUtil.markdown(regGreeting.getContent())}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="event_detail-writer_total_box_container">
+                    <div class="event_detail_writer_box">
+                        <img class="event_detail-writer_img" th:if="${regGreeting.getAuthor() != null}" th:src="${regGreeting.getAuthor().getProfile()}" alt="유저이미지">
+                        <img class="event_detail-writer_img" th:if="${regGreeting.getAuthor() == null}" src="/profile/남자.png" alt="유저이미지">
+                        <div class="event_detail_writer_box_writer" th:text="${regGreeting.getAuthor() == null ? '관리자' : regGreeting.getAuthor().getId()}"></div><span class="event_detail_writer_box_span">님의 게시글 더보기 ></span>
+                    </div>
+                    <div class="event_board_count_box">
+                        <div class="event_board_count_box_inner1">
+                            <div class="notice_likes_box">
+                                <a class="notice_like" th:if="${!isChecked}" th:href="@{/reg_greeting/vote/add/{no}(no=${regGreeting.no})}" th:text="추천"></a>
+                                <a class="notice_dislike" th:if="${isChecked}" th:href="@{/reg_greeting/vote/remove/{no}(no=${regGreeting.no})}" th:text="추천"></a>
+                            </div>
+                            <div class="good_count" th:text="${#lists.size(regGreeting.voter)}"></div>
+                        </div>
+                        <div class="event_board_count_box_inner2">
+                            <img class="reply_img" th:src="@{/img/댓글이미지.png}">
+                            <div class="reply_text">댓글</div>
+                            <div class="reply_count" th:text="${#lists.size(regGreeting.commentList)}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reply_setting_btn">
+                    <a th:href="@{|/reg_greeting/detail/${regGreeting.getNo()}?sort=asc|}" class="reg_btn_down">등록순</a>
+                    <a th:href="@{|/reg_greeting/detail/${regGreeting.getNo()}?sort=desc|}" class="reg_btn_up">최신순</a>
+                </div>
+                <div class="event_reply_section">
+                    <div>
+                        <div class="reply_board_section" th:each="regGreeting, loop : ${commentList}">
+                            <img class="event_reply_writer_img_box" th:if="${regGreeting.getCafeUser() != null}" th:src="${regGreeting.getCafeUser().getProfile()}" alt="유저이미지">
+                            <img class="event_reply_writer_img_box" th:if="${regGreeting.getCafeUser() == null}" src="/profile/남자.png" alt="유저이미지">
+                            <div class="event_reply_write_content_total_box">
+                                <div class="event_reply_writer_name_box" th:text="${regGreeting.getCafeUser().getId()}"></div>
+                                <div class="event_reply_cont_box" th:text="${regGreeting.getContent()}"></div>
+                                <div class="event_reply_regdate_box" th:text="${regGreeting.upDate != null ? #temporals.format(regGreeting.upDate, 'yyyy-MM-dd HH:mm:ss') : #temporals.format(regGreeting.regDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            </div>
+                            <div class="reply_modify_delete_btn" th:if="${#authentication.principal.username == regGreeting.getCafeUser().getId()}">
+                                <div class="event_page_reply_delete_btn">
+                                    <a href="javascript:void(0);" th:data-uri="@{|/reg_greeting/comment/delete/${regGreeting.getComment_no()}|}" class="delete" sec:authorize="isAuthenticated()" th:text="삭제"></a>
+                                </div>
+                                <div class="event_page_reply_modify_btn">
+                                    <a th:href="@{|/reg_greeting/comment/modify/${regGreeting.getComment_no()}|}" class="modify_btn" sec:authorize="isAuthenticated()" th:text="수정"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="reply_form" th:action="@{|/reg_greeting/comment/create/${regGreeting.getNo()}|}" class="event_reply_form" method="post">
+                        <div class="event_write_reply" sec:authorize="isAuthenticated()">
+                            <div class="event_write_reply_writer_name" th:text="${#authentication.getName()}"></div>
+                            <label class="event_reply">
+                                <textarea class="event_reply_textarea" name="content" id="content" placeholder="댓글을 작성해주세요."></textarea>
+                            </label>
+                            <div class="file_submit_btn">
+                                <img class="reply_camera_img" th:src="@{/img/카메라.png}">
+                                <input class="reply_submit_input_btn" type="submit" value="답변등록">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+   const delete_elements = document.getElementsByClassName("delete");
+   Array.from(delete_elements).forEach(function(element) {
+       element.addEventListener('click', function() {
+           if(confirm("정말로 삭제하시겠습니까?")) {
+               location.href = this.dataset.uri;
+           };
+       });
+   });
+
+    document.getElementById('reply_form').addEventListener('submit', function(event) {
+                    const content = document.getElementById('content').value.trim();
+
+                    if (content === '') {
+                        alert('댓글을 입력해 주세요.');
+                        event.preventDefault(); // 폼 제출을 막음
+                    }
+              });
+
+</script>
+</html>

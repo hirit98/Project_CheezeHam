@@ -1,0 +1,446 @@
+*{
+    color:inherit;
+    text-decoration:none;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+ul,ol{
+    list-style:none;
+}
+li{
+    list-style:none;
+}
+button, input, select, textarea {
+    border-radius: 0;
+    border: none;
+    background: 0 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-text-size-adjust: none;
+}
+button {
+    cursor: pointer;
+}
+address, em {
+    font-style: normal;
+}
+button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: none;
+    font-family: -apple-system, BlinkMacSystemFont, helvetica, "Apple SD Gothic Neo", sans-serif;
+}
+body {
+    overflow: hidden;
+}
+.management_title {
+    width: 100%;
+    padding: 10px;
+}
+.management_main {
+    background-color: #f8f8f8;
+    width: 100%;
+    border-top: 1px solid #ccc;
+}
+.management_main .management_view_type {
+    font-size: 20px;
+    padding: 20px;
+}
+.management_main .management_type_btn {
+    color: #ccc;
+    font-weight: bold;
+}
+.management_main .management_type_btn.on {
+    color: #ff6347;
+}
+.management_view_type a:first-child {
+    margin-right: 25px;
+}
+.management_main .management_content {
+    display: flex;
+    height: 530px;
+    padding: 0 20px;
+}
+.management_content .management_user_table_box {
+    width: 60%;
+    padding-right: 20px;
+}
+.management_search_form_box {
+    margin-bottom: 15px;
+}
+.management_search_form_box .management_count {
+    display: inline-block;
+}
+.management_search_form_box .management_search_form {
+    display: inline-block;
+    float: right;
+    border: 1px solid #bdbdbd;
+    height: 30px;
+    border-radius: 8px;
+    padding: 0 5px;
+    background-color: #fff;
+}
+.management_search_input {
+    height: 28px;
+}
+.management_search_form .search_btn {
+    background-image: url("/img/돋보기.png");
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    background-size: 18px 18px;
+    vertical-align: middle;
+}
+.management_table_content {
+    height: 430px;
+}
+.management_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.management_table thead {
+    background-color: #ff6347a1;
+    color: #fff;
+    height: 30px;
+}
+.management_table tbody tr {
+    color: #444;
+    height: 40px;
+    line-height: 30px;
+    text-align: center;
+    border-bottom: 1px solid #bdbdbd;
+}
+.management_table tbody tr:nth-child(odd) {
+    background-color: #f5faff;
+}
+.management_table tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+.view_user_profile {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.management_pagination {
+    margin-top: 15px;
+    float: right;
+}
+.management_content .management_user_detail_box {
+    width: 40%;
+    height: 500px;
+    border: 1px solid #bdbdbd;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: #fff;
+}
+.management_user_detail_box .detail_title {
+    height: 35px;
+    color: #444;
+    border-bottom: 1px solid #ddd;
+    background-color: #f3f8fd;
+    font-size: 12px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.detail_form_box_1 {
+    height: 160px;
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+}
+.detail_form_box_1 p,
+.detail_form_box_2 p,
+.detail_form_box_3 p {
+    font-size: 11px;
+    margin-bottom: 3px;
+}
+.detail_form_box_1 .user_no_box,
+.detail_form_box_1 .user_name_box,
+.detail_form_box_1 .user_gender_box,
+.detail_form_box_1 .user_id_box,
+.detail_form_box_1 .user_birthday_box {
+    display: inline-block;
+}
+.detail_form_box_1 .user_no_view,
+.detail_form_box_1 .user_name_view {
+    width: 131px;
+    height: 40px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: #f3f8fd;
+    font-size: 14px;
+    line-height: 40px;
+    margin-right: 15px;
+    text-align: left;
+    padding: 0 10px;
+}
+.detail_form_box_1 .user_gender_view {
+    width: 131px;
+    height: 40px;
+    font-size: 14px;
+    line-height: 40px;
+}
+.gender_list {
+    box-sizing: border-box;
+    width: 100%;
+    display: inline-flex;
+}
+.gender_list .radio_item {
+    width: 100%;
+}
+.radio_item {
+    display: inline-block;
+    vertical-align: top;
+}
+.radio_item:first-of-type {
+    border-radius: 30px 0 0 30px;
+}
+.radio_item:last-of-type {
+    border-radius: 0 30px 30px 0;
+}
+.radio_item label {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #f3f8fd;
+    border-radius: inherit;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    line-height: 18px;
+    color: #929294;
+    text-align: center;
+}
+label {
+    cursor: pointer;
+}
+.radio_item #male:checked+label {
+    z-index: 1;
+    background-color: dodgerblue;
+    font-weight: 600;
+    color: #fff;
+}
+.radio_item #female:checked+label {
+    z-index: 1;
+    background-color: #e46a98;
+    font-weight: 600;
+    color: #fff;
+}
+.radio_item+.radio_item {
+    margin-left: -1px;
+}
+.blind {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+}
+.detail_form_box_1 .form_box_1-2 {
+    margin-top: 15px;
+}
+.detail_form_box_1 .birthday_year_text,
+.detail_form_box_1 .birthday_month_text,
+.detail_form_box_1 .birthday_day_text {
+    display: inline-block;
+}
+.detail_form_box_1 .user_id_view,
+.detail_form_box_1 .birthday_year_text,
+.detail_form_box_1 .birthday_month_text,
+.detail_form_box_1 .birthday_day_text {
+    height: 40px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: #f3f8fd;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: left;
+    padding: 0 10px;
+}
+.detail_form_box_1 .user_id_view,
+.detail_form_box_1 .birthday_year_text,
+.detail_form_box_1 .birthday_month_text {
+    margin-right: 15px;
+}
+.user_id_view {
+    width: 150px;
+}
+.birthday_year_text {
+    width: 120px;
+}
+.birthday_month_text,
+.birthday_day_text {
+    width: 50px;
+}
+.detail_form_box_2 {
+    height: 160px;
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+}
+.detail_form_box_2 .user_phone_box {
+    display: inline-block;
+    position: absolute;
+}
+.detail_form_box_2 .user_email_box {
+    margin-top: 15px;
+}
+.detail_form_box_2 .user_phone_view,
+.detail_form_box_2 .user_email_view {
+    height: 40px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: #f3f8fd;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: left;
+    padding: 0 10px;
+}
+.user_phone_view {
+    width: 200px;
+}
+.detail_form_box_3 {
+    padding: 12px;
+    height: 145px;
+}
+.select_grade_component .select_box:after {
+    display: inline-block;
+    background-image: url("/img/notice_list_icon.svg");
+    background-repeat: no-repeat;
+    vertical-align: top;
+}
+.select_grade_component {
+    display: inline-block;
+    position: relative;
+    height: 40px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background-color: #f3f8fd;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+.select_grade_component .select_box {
+    display: block;
+    position: relative;
+    height: 40px;
+    padding: 10px 36px 0 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.select_grade_component .select_box:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.select_grade_component .select_box:after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    background-position: -229px -185px;
+    width: 12px;
+    height: 5px;
+}
+.select_grade_component.is_selected .select_box:after {
+    background-position: -25px -250px;
+    width: 12px;
+    height: 5px;
+}
+.select_grade_component .select_list {
+    display: none;
+    overflow-y: auto;
+    position: absolute;
+    top: 34px;
+    left: -1px;
+    width: 140px;
+    max-height: 288px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    z-index: 12;
+}
+.select_grade_component.is_selected .select_list {
+    display: block;
+}
+.select_grade_component .select_list li a {
+    display: block;
+    height: 36px;
+    padding: 0 12px;
+    line-height: 36px;
+    color: #333;
+    white-space: nowrap;
+}
+.select_grade_component .select_list li a:hover {
+    background-color: rgba(243, 248, 253, 0.75);
+    color: #ff4b4b;
+    cursor: pointer;
+}
+.detail_form_box_3 .user_regdate_view {
+    height: 40px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: #f3f8fd;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: left;
+    padding: 0 10px;
+}
+.detail_form_box_3 .form_btn_box {
+    margin-top: 15px;
+}
+.detail_form_box_3 .form_delete_btn,
+.detail_form_box_3 .form_modify_btn {
+    height: 40px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+.form_delete_btn {
+    width: 30%;
+    background-color: #f52424;
+    color: #fff;
+    margin-right: 38px;
+}
+.form_modify_btn {
+    width: 60%;
+    background-color: forestgreen;
+    color: #fff;
+}
+.pagination {
+    text-align: center;
+    font-size: 13px;
+}
+.pagination a {
+    color: #333;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: 0 2px;
+    box-sizing: border-box;
+    line-height: 24px;
+    font-family: arial, sans-serif;
+}
+.pagination a:hover {
+    text-decoration: none;
+}
+.pagination a.on {
+    border: 1px solid #e5e5e5;
+    background-color: #fff;
+    color: #ffb2b2;
+}
+.pagination .first_btn,
+.pagination .prev_btn,
+.pagination .next_btn,
+.pagination .last_btn {
+    width: auto;
+}

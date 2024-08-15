@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내정보수정</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/myInfoModify.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/signup.css}" type="text/css">
+</head>
+<body>
+<div class="myInfo_modify_title">
+    <p>cheezeHam</p>
+</div>
+<div class="myInfo_modify_title_inner">
+    <p>내정보 수정하기</p>
+</div>
+<div class="myInfo_modify_form_container">
+    <div class="myInfo_modify_form_inner">
+        <div class="myInfo_modify_form_content">
+            <form class="myInfo_modify_form" th:action="@{/user/update}" method="post" enctype="multipart/form-data">
+                <div class="myInfo_modify_form_content">
+                    <div class="myInfo_modify_form_section">
+                        <div class="myInfo_modify_form_list">
+                            <div>
+                                <div class="form_item user">
+                                    <input type="text" name="id" id="id" class="signup_input" th:value="${user.id}" readonly>
+                                    <div class="id_naver">@naver.com</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form_item lock password">
+                                    <input type="password" name="pwd" placeholder="새 비밀번호를 입력해주세요" class="signup_input" id="password">
+                                </div>
+                                <div>
+                                    <p class="password_error_message"></p>
+                                </div>
+                                <div class="form_item lock password">
+                                    <input type="password" name="pwd_check" placeholder="비밀번호를 한번 더 입력해주세요" class="signup_input" id="pwd_check">
+                                </div>
+                                <div>
+                                    <p class="check_error_message"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form_item email">
+                                    <input type="text" id="email" th:value="${user.email}" class="signup_input" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myInfo_modify_form_list">
+                            <div>
+                                <div class="form_item user">
+                                    <input type="text" id="username" th:value="${user.username}" class="signup_input" readonly>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form_item calendar">
+                                    <input type="text" id="birthday" th:value="${user.birthday}" class="signup_input" readonly>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form_item phone">
+                                    <input type="tel" name="phone" id="phone" class="signup_input" maxlength="13" th:value="${user.phone}">
+                                </div>
+                                <div>
+                                    <p class="phone_error_message"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myInfo_modify_form_list">
+                            <div>
+                                <div class="form_item profile">
+                                    <input type="file" id="uploadProfile" accept="image/*" name="profile">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_submit_wrap">
+                    <button type="submit" class="myInfo_modify_btn_submit" id="btnModify">내정보 수정하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#phone').on('input', function() {
+            var phoneNumber = $(this).val();
+            phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+
+            var formattedPhoneNumber = '';
+
+            if (phoneNumber.length >= 4 && phoneNumber.length <= 7) {
+                formattedPhoneNumber = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3);
+            } else if (phoneNumber.length >= 8) {
+                formattedPhoneNumber = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 4) + '-' + phoneNumber.substr(7);
+            } else {
+                formattedPhoneNumber = phoneNumber;
+            }
+
+            // 포맷팅된 전화번호를 입력란에 적용
+            $(this).val(formattedPhoneNumber);
+        })
+    })
+</script>
+<script th:src="@{/js/modify_form.js}"></script>
+</body>
+</html>

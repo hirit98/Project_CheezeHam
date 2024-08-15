@@ -1,0 +1,263 @@
+<aside th:fragment="asidebarFragment">
+    <div class="asidebar_container">
+        <div class="aside_tab_btn">
+            <div class="aside_tab_btn_box">
+                <div class="aside_tab_btn_cafe_info">카페정보</div>
+                <div class="aside_tab_bar"></div>
+                <div class="aside_tab_btn_my_info" id="myInfoLink">나의활동</div>
+            </div>
+        </div>
+        <div class="aside_profil_box">
+            <div class="aside_user_profil">
+                <div class="aside_user_profil_inner">
+                    <div class="user_profil_inner_img">
+                        <img class="aside_banner_img" src="" alt="유저이미지">
+                        <div class="aside_banner_img_text">
+                            <input id="user_name" th:text="${#authentication.getName()}" readonly>
+                            <div class="user_info_text_innerbox">
+                                <div class="user_regdate_text"></div><div class="user_regdate_text">가입</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user_profil_inner_info">
+                        <ul class="user_profil_inner_info_text_ul">
+                            <li class="user_profil_inner_info_text_li1">
+                                <div class="aside_icon_img_box">
+                                    <img class="aside_icon_img" th:src="@{/img/rank.gif}" alt="회원등급">
+                                    <input id="user_rank" value="일반등급">
+                                </div>
+                            </li>
+                            <!--<li class="user_profil_inner_info_text_li2">
+                                <div class="aside_icon_img_box">
+                                    <img class="aside_icon_img" th:src="@{/img/방문자.png}" alt="방문자">
+                                    <div class="aside_icon_text_div">방문</div>
+                                </div>
+                                <div class="aside_icon_text_div">0</div>
+                            </li>-->
+                            <li class="user_profil_inner_info_text_li3">
+                                <div class="aside_icon_img_box">
+                                    <img class="aside_icon_img" th:src="@{/img/게시글.png}" alt="게시글">
+                                    <a href="#" class="aside_icon_text_div">내가 쓴 게시글</a>
+                                    <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                                </div>
+                                <div class="aside_icon_text_div_post"></div>
+                            </li>
+                            <li class="user_profil_inner_info_text_li4">
+                                <div class="aside_icon_img_box">
+                                    <img class="aside_icon_img" th:src="@{/img/댓글.png}" alt="댓글">
+                                    <a href="#" class="aside_icon_text_div">내가 쓴 댓글</a>
+                                    <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                                </div>
+                                <div class="aside_icon_text_div_comment"></div>
+                            </li>
+                            <!--<li class="user_profil_inner_info_text_li5">
+                                <div class="aside_icon_img_box">
+                                    <img class="aside_icon_img" th:src="@{/img/거래내역.png}" alt="거래내역">
+                                    <a href="#" class="aside_icon_text_div">내 거래내역 보기</a>
+                                    <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                                </div>
+                                <div class="aside_icon_text_div">0</div>
+                            </li>-->
+                        </ul>
+                        <div class="aside_cafe_info_box">
+                            <a th:href="@{/user/update}" class="aside_cafe_info_a_btn" sec:authorize="isAuthenticated()" onclick="openNewWindow(this.href, 700, 700); return false;" th:text="'내정보 수정하기'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aside_admin_profil">
+                <div class="aside_admin_profil_inner">
+                    <div class="admin_profil_inner_img">
+                        <img class="aside_banner_img" th:src="@{/img/admin_img.jpg}" alt="관리자이미지">
+                        <div class="aside_banner_img_text">
+                            <div class="aside_admin_title">
+                                <input id="admin_name" value="관리자">
+                                <div class="admin_title_mark_box">
+                                    <div class="admin_title_mark_box_text">매니저</div>
+                                </div>
+                            </div>
+                            <div class="admin_info_text_innerbox">
+                                <div class="admin_regdate_text">2024.07.04</div><div class="admin_regdate_text">개설</div>
+                            </div>
+                            <a th:href="@{/user/list}" class="aside_cafe_info_text" sec:authorize="hasRole('ADMIN')" onclick="openNewWindow(this.href, 1200, 650); return false;" th:text="'카페관리'"></a>
+                            <a th:href="@{/notice/rule}" class="aside_cafe_info_text" sec:authorize="hasRole('USER')" th:text="'카페규칙'"></a>
+                            <a th:href="@{/notice/rule}" class="aside_cafe_info_text" sec:authorize="isAnonymous()" th:text="'카페규칙'"></a>
+                        </div>
+                    </div>
+                    <div class="admin_profil_inner_info">
+                        <ul class="admin_profil_inner_info_text_ul">
+                            <li class="admin_profil_inner_info_text_li1">
+                                <div class="aside_icon_img_box">
+                                    <span class="aside_icon_img_rank"></span>
+                                    <input id="admin_rank" value="나무4단계">
+                                </div>
+                            </li>
+                            <li class="admin_profil_inner_info_text_li2">
+                                <div class="aside_icon_img_box">
+                                    <img class="visitor_img" src="https://ssl.pstatic.net/static/cafe/cafe_pc/svg/ico_member.svg" alt="멤버수">
+                                    <input id="visitor">
+                                </div>
+                            </li>
+                            <li class="admin_profil_inner_info_text_li2">
+                                <div class="aside_icon_img_box">
+                                    <img class="aside_icon_img_notice" th:src="@{/img/notice.png}" alt="공지사항">
+                                    <a th:href="@{/notice/list}" class="notice_go">공지사항</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="aside_cafe_info_box">
+                            <a href="#" class="aside_cafe_info_a_btn">카페정보 보러가기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="aside_write_box">
+            <div class="aside_write_box_inner">
+                <h1 class="aside_write_inner_title">대표인기 카페</h1>
+                <img class="aside_write_inner_img" src="https://ssl.pstatic.net/static/cafe/cafe_pc/svg/badge_popular_40x32.svg" alt="NAVER 대표카페">
+            </div>
+            <div>
+                <div class="aside_write_btn">
+                    <a th:href="@{/cafeWrite/writePage}" class="aside_write_btn_a">카페 글쓰기</a>
+                </div>
+                <div class="aside_qna_btn">
+                    <a href="#" class="aside_write_btn_a">문의하기</a>
+                </div>
+            </div>
+            <form action="/total/list" class="aside_search_keyword_box">
+                <div class="aside_search_keyword_box_inner">
+                    <input class="keyword_search_box" name="keyword" placeholder="검색어를 입력하세요.">
+                    <input type="hidden" name="field" value="1">
+                    <button class="keyword_search_btn" type="submit">검색</button>
+                </div>
+            </form>
+            <div class="aside_total_board">
+                <div class="aside_total_board_inner">
+                    <img class="board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                    <a class="aside_total_board_btn" th:href="@{/total/list}">전체글보기</a>
+                </div>
+                <div class="aside_total_board_count"></div>
+            </div>
+            <div class="aside_event_board">
+                <div class="aside_event_board_inner">
+                    <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                    <a class="aside_event_board_btn" th:href="@{/event/list}">이벤트 진행</a>
+                </div>
+                <div class="aside_total_board_null"></div>
+            </div>
+            <div class="aside_event_board">
+                <div class="aside_event_board_inner">
+                    <div class="aside_spacebar">ㄴ</div>
+                    <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                    <a class="aside_event_board_btn" href="#">이벤트 후기</a>
+                </div>
+                <div class="aside_total_board_null"></div>
+            </div>
+        </div>
+        <div class="aside_board_list">
+            <div class="aside_board_list_1">
+                <div class="aside_board_list_1_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">입학식</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/reg_greeting/list}">가입인사</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div class="aside_board_list_2">
+                <div class="aside_board_list_2_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">자랑 게시판</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/boast/list}">자랑 게시판</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div class="aside_board_list_3">
+                <div class="aside_board_list_3_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">자유게시판</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/free/list}">통합 자유게시판</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div class="aside_board_list_4">
+                <div class="aside_board_list_4_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">질문답변</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/qna/list}">통합 질문 답변</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div class="aside_board_list_5">
+                <div class="aside_board_list_5_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">장터 게시판</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/ham/list}">햄스터 간식/먹거리</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/cat/list}">고양이 간식/먹거리</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div class="aside_board_list_6">
+                <div class="aside_board_list_6_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">떠든학생 신고/카페건의</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/suggest/list}">카페관련 건의하기</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/accuse/list}">떠든학생 신고하기</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div class="aside_board_list_7" sec:authorize="hasRole('USER')">
+                <div class="aside_board_list_7_inner">
+                    <div class="aside_board_list_1_inner_title">
+                        <p class="aside_board_list_1_p">카페 탈퇴</p>
+                    </div>
+                    <div class="aside_board_list_1_in_text">
+                        <img class="event_board_img" th:src="@{/img/board_img.png}" alt="게시글이미지" >
+                        <a class="aside_board_list_1_in_btn" th:href="@{/user/resign}" onclick="openNewWindow(this.href, 500, 400); return false;">카페 탈퇴하기</a>
+                        <img class="aside_icon_img_new" th:src="@{/img/ico_new.png}">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="https://talk.naver.com/ct/w4nd8o" class="chatbot"><img class="chatbot_img" src="https://ssl.pstatic.net/static/cafe/banner_chatbot.png" width="171" height="55" alt="궁금한게 있을
+                땐 카페 스마트봇"></a>
+            </div>
+        </div>
+    </div>
+</aside>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:src="@{/js/motion.js}"></script>
+<script layout:fragment="script" type='text/javascript'></script>
+

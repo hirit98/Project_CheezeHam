@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+body {
+    overflow: hidden;
+}
+main {
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, helvetica, "Apple SD Gothic Neo", sans-serif;
+}
+.resign_content_box {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.resign_content_box .resign_title_box {
+    border-bottom: 1px solid #ddd;
+    height: 50px;
+    padding: 12px;
+    background-color: #f3f3f3;
+    font-size: 14px;
+}
+.resign_content_box .resign_title_box h3:before {
+    content: '';
+    display: inline-block;
+    vertical-align: top;
+    background-image: url(/img/자물쇠.png);
+    width: 18px;
+    height: 18px;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    margin: 2px 2px 0 0;
+}
+.resign_content_box .resign_form_box {
+    height: auto;
+    padding: 12px;
+    line-height: 25px;
+}
+.resign_content_box .resign_form_box .login_id_box {
+    margin-top: 10px;
+}
+#resign_pwd_input {
+    width: 100%;
+    height: 25px;
+    border: 1px solid #ddd;
+}
+.resign_submit_btn {
+    width: 100%;
+    height: 26px;
+    text-align: center;
+    background-color: #ff6347;
+    color: #fff;
+    margin-top: 12px;
+}
+.resign_submit_btn:hover {
+    cursor: pointer;
+}
+.resign_close_box {
+    text-align: center;
+    margin: 20px 0;
+}
+.resign_close_btn {
+    width: 60px;
+    background-color: #444;
+    color: #fff;
+    padding: 5px;
+}
+.resign_close_btn:hover {
+    cursor: pointer;
+}

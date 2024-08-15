@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="signup_container">
+    <div class="signup_inner">
+        <h1 class="signup_logo">
+            <a class="main_link" th:href="@{/}">CHEEZEHAM</a>
+        </h1>
+        <div class="signup_content">
+            <form class="signup_form" th:object="${cafeUserCreateForm}" th:action="@{/user/signup}" method="post">
+
+                <div class="signup_form_content">
+                    <div class="signup_form_section">
+                        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+                        <div class="signup_form_list">
+                            <div>
+                                <div class="form_item user">
+                                    <input type="text" id="id" placeholder="아이디" class="signup_input" th:field="*{id}">
+                                    <div class="id_naver">@naver.com</div>
+                                </div>
+                                <div>
+                                    <p class="id_error_message"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form_item lock password">
+                                    <input type="password" placeholder="비밀번호" class="signup_input" th:field="*{password}">
+                                </div>
+                                <div>
+                                    <p class="password_error_message"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form_item email">
+                                    <input type="text" id="email" placeholder="이메일(비밀번호 찾기 본인확인용)" class="signup_input" th:field="*{email}">
+                                </div>
+                                <div>
+                                    <p class="email_error_message"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="signup_form_list">
+                            <div>
+                                <div class="form_item user">
+                                    <input type="text" id="username" placeholder="이름" class="signup_input" th:field="*{username}">
+                                </div>
+                                <div>
+                                    <p class="username_error_message"></p>
+                                </div>
+                            </div>
+                            <div>
+                                <div  class="form_item calendar">
+                                    <input type="text" id="birthday" placeholder="생년월일 8자리" class="signup_input" th:field="*{birthday}" maxlength="10">
+                                </div>
+                                <div>
+                                    <p class="birthday_error_message"></p>
+                                </div>
+                            </div>
+                            <div class="form_item gender">
+                                <ul class="gender_list" id="identityGender">
+                                    <li class="radio_item">
+                                        <input type="radio" id="malegender" name="gender" value="male" class="blind" th:field="*{gender}">
+                                        <label for="malegender">남자</label>
+                                    </li>
+                                    <li class="radio_item">
+                                        <input type="radio" id="femalegender" name="gender" value="female" class="blind" th:field="*{gender}">
+                                        <label for="femalegender">여자</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="gender_error_message"></p>
+                            <div>
+                                <div class="form_item phone">
+                                    <input type="tel" id="phone" placeholder="휴대전화번호" class="signup_input" th:field="*{phone}" maxlength="13">
+                                </div>
+                                <div>
+                                    <p class="phone_error_message"></p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="signup_form_list">
+                            <div class="form_item check_box">
+                                <div class="signup_title_area">
+                                    <div class="check_circle">
+                                        <input type="checkbox" id="agree_all" class="blind">
+                                        <label for="agree_all">
+                                            <em class="option point">[필수]</em>
+                                            <span class="option_text">회원가입 약관 전체동의</span>
+                                        </label>
+                                    </div>
+                                    <button type="button" class="btn_expand" aria-expanded="false">
+                                        <span class="blind">약관 목록</span>
+                                    </button>
+                                </div>
+                                <ul class="check_list">
+                                    <li class="check_list_item">
+                                        <div class="check_normal">
+                                            <input type="checkbox" id="agree_01" class="blind">
+                                            <label for="agree_01">
+                                                <span class="check_list_text">개인정보 이용</span>
+                                            </label>
+                                            <a href="https://nid.naver.com/user2/common/terms/terms2?t=viewPersonalInfoTerms&amp;v=1" target="_blank" class="link_arrow">
+                                                <span class="blind">약관 전문보기</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li class="check_list_item">
+                                        <div class="check_normal">
+                                            <input type="checkbox" id="agree_02" class="blind">
+                                            <label for="agree_02">
+                                                <span class="check_list_text">고유식별정보 처리</span>
+                                            </label>
+                                            <a href="https://nid.naver.com/user2/common/terms/terms2?t=viewUniqInfoTerms&amp;v=1" target="_blank" class="link_arrow">
+                                                <span class="blind">약관 전문보기</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li class="check_list_item">
+                                        <div class="check_normal">
+                                            <input type="checkbox" id="agree_03" class="blind">
+                                            <label for="agree_03">
+                                                <span class="check_list_text">통신사 이용약관</span>
+                                            </label>
+                                            <a href="https://nid.naver.com/user2/common/terms/terms2?t=viewCellPhoneCarriersTerms&amp;v=1" target="_blank" class="link_arrow">
+                                                <span class="blind">약관 전문보기</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li class="check_list_item">
+                                        <div class="check_normal">
+                                            <input type="checkbox" id="agree_04" class="blind">
+                                            <label for="agree_04">
+                                                <span class="check_list_text">인증사 이용약관</span>
+                                            </label>
+                                            <a href="https://nid.naver.com/user2/common/terms/terms2?t=viewServiceTerms&amp;v=1" target="_blank" class="link_arrow">
+                                                <span class="blind">약관 전문보기</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div>
+                                <p class="check_box_error_message"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn_submit_wrap">
+                    <button type="submit" class="signup_btn_submit" id="btnJoin" >가입하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $(".check_box .btn_expand").click(function() {
+            if($(this).attr("aria-expanded") == "true") {
+                $(this).attr("aria-expanded", "false");
+                $(this).parents(".check_box").children(".check_list").removeClass("on");
+            } else {
+                $(this).attr("aria-expanded", "true");
+                $(this).parents(".check_box").children(".check_list").addClass("on");
+            }
+        })
+
+        $("#agree_all").click(function () {
+
+            var isChecked = $(this).prop('checked');
+
+            $("#agree_01").prop('checked', isChecked);
+            $("#agree_02").prop('checked', isChecked);
+            $("#agree_03").prop('checked', isChecked);
+            $("#agree_04").prop('checked', isChecked);
+        })
+
+        $('#birthday').on('input', function() {
+            var dob = $(this).val().replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+            var formattedDOB = '';
+
+            // 숫자가 입력될 때마다 포맷팅
+            if (dob.length >= 5) {
+              formattedDOB += dob.substr(0, 4) + '-';
+              if (dob.length >= 7) {
+                formattedDOB += dob.substr(4, 2) + '-';
+                if (dob.length >= 9) {
+                  formattedDOB += dob.substr(6, 2);
+                } else {
+                  formattedDOB += dob.substr(6);
+                }
+              } else {
+                formattedDOB += dob.substr(4);
+              }
+            } else {
+              formattedDOB = dob;
+            }
+
+            $(this).val(formattedDOB);
+        });
+
+
+        $('#phone').on('input', function() {
+            var phoneNumber = $(this).val();
+            phoneNumber = phoneNumber.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+
+            var formattedPhoneNumber = '';
+
+            if (phoneNumber.length >= 4 && phoneNumber.length <= 7) {
+              formattedPhoneNumber = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3);
+            } else if (phoneNumber.length >= 8) {
+              formattedPhoneNumber = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 4) + '-' + phoneNumber.substr(7);
+            } else {
+              formattedPhoneNumber = phoneNumber;
+            }
+
+            // 포맷팅된 전화번호를 입력란에 적용
+            $(this).val(formattedPhoneNumber);
+        });
+    })
+</script>
+<script th:src="@{/js/signup_form.js}"></script>
+</body>
+</html>
